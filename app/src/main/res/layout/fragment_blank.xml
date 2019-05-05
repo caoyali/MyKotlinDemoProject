@@ -6,6 +6,14 @@
         android:layout_height="match_parent"
         tools:context=".BlankFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout android:layout_width="0dp"
+                                                       android:layout_height="0dp"
+                                                       app:layout_constraintEnd_toEndOf="parent"
+                                                       app:layout_constraintStart_toStartOf="parent"
+                                                       app:layout_constraintBottom_toTopOf="@+id/mAllLife"
+                                                       app:layout_constraintTop_toTopOf="parent"
+                                                       android:id="@+id/mContentRoot"></androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
             android:text="我的动态"
             android:layout_width="0dp"
@@ -53,6 +61,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintEnd_toStartOf="@+id/mMyLife"/>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

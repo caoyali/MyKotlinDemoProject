@@ -14,5 +14,9 @@
             <action android:id="@+id/action_blankFragment_to_placeholder3"
                     app:destination="@id/placeholder3"/>
     </fragment>
-    <fragment android:id="@+id/placeholder3"/>
+    <fragment android:id="@+id/placeholder3"
+              android:name="com.example.mykotlindemoprogect.UserFragment"
+              android:label="UserFragment"
+              tools:layout="@layout/fragment_user"
+    />
 </navigation>
