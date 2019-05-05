@@ -12,11 +12,14 @@
               tools:layout="@layout/fragment_blank">
 
             <action android:id="@+id/action_blankFragment_to_placeholder3"
-                    app:destination="@id/placeholder3"/>
+                    app:destination="@id/placeholder3"
+                    app:enterAnim="@anim/slide_right_in"
+                    app:exitAnim="@anim/slide_left_out"
+                    app:popEnterAnim="@anim/slide_left_in"
+                    app:popExitAnim="@anim/slide_right_out"/>
     </fragment>
     <fragment android:id="@+id/placeholder3"
               android:name="com.example.mykotlindemoprogect.UserFragment"
               android:label="UserFragment"
-              tools:layout="@layout/fragment_user"
-    />
+              tools:layout="@layout/fragment_user"/>
 </navigation>

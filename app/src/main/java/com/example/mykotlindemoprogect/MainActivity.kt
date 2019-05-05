@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity(){
 
     override fun onSupportNavigateUp(): Boolean {
         navController = findNavController(this, R.id.my_nav_host_fragment)
-        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener { controller, destination, _ ->
             if(destination.id == R.id.blankFragment) {
                 toolbar.visibility = View.GONE
 //                bottomNavigationView.visibility = View.GONE

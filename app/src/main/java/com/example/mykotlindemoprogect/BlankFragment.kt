@@ -1,6 +1,7 @@
 package com.example.mykotlindemoprogect
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,17 @@ class BlankFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_blank, container, false)
     }
 
+    private var mHandler : Handler = Handler{
+        false
+    }
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        this!!.activity?.let {
-            Navigation.findNavController(mContentRoot).navigate(R.id.action_blankFragment_to_placeholder3)
-        };
         super.onActivityCreated(savedInstanceState)
+        var bundle : Bundle = Bundle();
+        bundle.putInt(UserFragment.UID_KEY, 1)
+        mHandler.postDelayed(Runnable { kotlin.run {
+            this!!.activity?.let {
+                Navigation.findNavController(mContentRoot).navigate(R.id.action_blankFragment_to_placeholder3, bundle)
+            }
+        } }, 5000)
     }
 }
