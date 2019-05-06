@@ -1,4 +1,4 @@
-package com.example.mykotlindemoprogect;
+package Data.Model;
 
 import Data.Dao.UserDao;
 import Data.Dao.DataBase.UserDatabase;
@@ -8,6 +8,8 @@ import android.content.Context;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.room.Room;
+
+import java.util.List;
 
 public class UserProfileViewModel extends ViewModel {
     private String userId;
@@ -40,6 +42,14 @@ public class UserProfileViewModel extends ViewModel {
 
     public void changeUserName(User user){
         userRepository.changeuserName(user);
+    }
+
+    public void insertNewUser(User user){
+        userRepository.insertData(user);
+    }
+
+    public List<User> getAllUser(){
+        return userRepository.getAlluser();
     }
 
     public interface InitFinishCallBack{

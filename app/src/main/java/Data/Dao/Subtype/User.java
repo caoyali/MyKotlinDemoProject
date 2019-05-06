@@ -1,8 +1,12 @@
 package Data.Dao.Subtype;
 
+import android.widget.TextView;
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import java.util.List;
 
 
 @Entity
@@ -18,6 +22,8 @@ public class User {
     private String name;
     @ColumnInfo(name = "phone")
     private String phone;
+//    @ColumnInfo(name = "users")
+//    private List<User> users;
 
     public int getId() {
         return id;
@@ -61,4 +67,18 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getId() + getAge()+getGender()+getName()+getPhone();
+    }
+
+    //    public List<User> getUsers() {
+//        return users;
+//    }
+//
+//    public void setUsers(List<User> users) {
+//        this.users = users;
+//    }
 }

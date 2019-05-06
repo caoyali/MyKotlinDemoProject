@@ -1,6 +1,7 @@
-package com.example.mykotlindemoprogect;
+package Views.fragment;
 
 import Data.Dao.Subtype.User;
+import Data.Model.UserProfileViewModel;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -12,8 +13,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import com.example.mykotlindemoprogect.R;
+
+import java.util.List;
 
 public class UserFragment extends Fragment {
     public static final String UID_KEY = "uid";
@@ -21,10 +26,14 @@ public class UserFragment extends Fragment {
     private UserProfileViewModel viewModel;
     private int userId;
     private TextView userInfo;
+    private TextView allInfoTv;
     private Button commitBtn;
     private EditText editText;
-    User currentUser;
+    private Button mAddBtn;
+    private Button mLookAll;
+//    User currentUser;
     Handler handler = new Handler();
+    List<User> uss;
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
@@ -41,24 +50,88 @@ public class UserFragment extends Fragment {
         userInfo = v.findViewById(R.id.mUserInfo);
         commitBtn = v.findViewById(R.id.mCommitBtn);
         editText = v.findViewById(R.id.mEditText);
+        mAddBtn = v.findViewById(R.id.mAddBtn);
+        allInfoTv = v.findViewById(R.id.mAllInfoTv);
+        mLookAll = v.findViewById(R.id.mLookAll);
         commitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String edittext = editText.getText().toString();
-                currentUser.setName(edittext);
+
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        viewModel.changeUserName(currentUser);
+                        uss = viewModel.getAllUser();
+                        if (null != uss){
+                            User u = uss.get(uss.size()-1);
+                            u.setName(edittext);
+                            viewModel.changeUserName(u);
+                        }
                     }
                 }).start();
             }
         });
+
+        mAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String edittext = editText.getText().toString();
+                        User user = new User();
+                        user.setName(edittext);
+                        user.setAge(0);
+                        user.setGender("--");
+                        user.setPhone("手机未知");
+                        uss = viewModel.getAllUser();
+                        if (null != uss){
+                            User u = uss.get(uss.size()-1);
+                            u.setName(edittext);
+                            user.setId(u.getId()+1);
+                        } else {
+                            user.setId(0);
+                        }
+                        viewModel.insertNewUser(user);
+                    }
+                }).start();
+            }
+        });
+
+        mLookAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        uss = viewModel.getAllUser();
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+//                                updateView(null);
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+
+
         return v;
     }
 
     private void updateView(User u){
-        userInfo.setText(u.getAge() + u.getGender() + u.getName() + u.getPhone());
+        if (null != u){
+            userInfo.setText(u.getAge() + u.getGender() + u.getName() + u.getPhone());
+        }
+        String s ="";
+        if (null != uss){
+            for (User user : uss){
+                s = s + user.toString();
+            }
+            allInfoTv.setText(s);
+        }
     }
 
     private class MyThread extends Thread{
@@ -74,7 +147,6 @@ public class UserFragment extends Fragment {
                                 @Override
                                 public void onChanged(User user) {
                                     updateView(user);
-                                    currentUser = user;
                                 }
                             });
 
@@ -88,5 +160,10 @@ public class UserFragment extends Fragment {
                 }
             });
         }
+    }
+
+
+    private class MyLiveData<T> extends LiveData<T>{
+
     }
 }
