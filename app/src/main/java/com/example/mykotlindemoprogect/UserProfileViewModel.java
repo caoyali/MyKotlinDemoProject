@@ -14,10 +14,14 @@ public class UserProfileViewModel extends ViewModel {
     private LiveData<User> userLiveData;
     private UserRepository userRepository;
 
+//    public UserProfileViewModel(UserRepository userRepository) {
+//        this.userRepository = userRepository;
+//    }
+
     public UserProfileViewModel() {
     }
 
-    public void init(int userId, Context context) {
+    public void init(int userId, Context context, InitFinishCallBack initFinishCallBack) {
         if (this.userLiveData != null) {
             // ViewModel is created on a per-Fragment basis, so the userId
             // doesn't change.
@@ -28,8 +32,17 @@ public class UserProfileViewModel extends ViewModel {
         UserDao userDao = db.userDao();
         userRepository = new UserRepository(userDao);
         userLiveData = userRepository.getUser(userId);
+        initFinishCallBack.onInitFinish();
     }
     public LiveData<User> getUser() {
         return userLiveData;
+    }
+
+    public void changeUserName(User user){
+        userRepository.changeuserName(user);
+    }
+
+    public interface InitFinishCallBack{
+        void onInitFinish();
     }
 }

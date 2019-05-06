@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 
@@ -15,4 +16,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE id = :userId")
     LiveData<User> load(int userId);
+
+    @Update(onConflict = REPLACE)
+    void update(User user);
 }

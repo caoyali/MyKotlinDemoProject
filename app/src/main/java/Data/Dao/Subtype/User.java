@@ -1,16 +1,22 @@
 package Data.Dao.Subtype;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
 
 @Entity
 public class User {
 
     @PrimaryKey
     private int id;
+    @ColumnInfo(name = "age")
     private int age;
+    @ColumnInfo(name = "gender")
     private String gender;
+    @ColumnInfo(name = "name")
     private String name;
+    @ColumnInfo(name = "phone")
     private String phone;
 
     public int getId() {

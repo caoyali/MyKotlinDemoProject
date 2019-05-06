@@ -20,7 +20,7 @@ class BlankFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         var bundle : Bundle = Bundle();
-        bundle.putInt(UserFragment.UID_KEY, 1)
+        bundle.putInt(UserFragment.UID_KEY, UserFragment.LOAD_USER_ID)
         mHandler.postDelayed(Runnable { kotlin.run {
             this!!.activity?.let {
                 Navigation.findNavController(mContentRoot).navigate(R.id.action_blankFragment_to_placeholder3, bundle)
